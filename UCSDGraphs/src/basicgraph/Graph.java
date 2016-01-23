@@ -121,8 +121,66 @@ public abstract class Graph {
 	 * @return The degree sequence of this graph.
 	 */
 	public List<Integer> degreeSequence() {
-		// XXX: Implement in part 1 of week 1
-		return null;
+		List<Integer> degree = new ArrayList<>();
+		List<Integer> NeighborList;
+		int inNeighbor;
+		int outNeighbor;
+		int degrees;
+		for(int i = 0; i <= numVertices; i++){
+			NeighborList = getInNeighbors(i);
+			inNeighbor = NeighborList.size();
+			NeighborList = getNeighbors(i);
+			outNeighbor = NeighborList.size();
+			degrees = inNeighbor + outNeighbor;
+			degree.add(degrees);
+			mergeSort(degree);
+		}
+		
+		
+		return degree;
+	}
+	
+	
+	public void mergeSort(List<Integer> degree){
+		int[] helper = new int[degree.size()];
+		mergeSort(degree, helper, 0, degree.size()-1);
+	}
+	
+	public void mergeSort(List<Integer> array,int[] helper, int low, int high){
+		if(high >= low){
+			int mid = (low + high)/2;
+			
+			mergeSort(array, helper, low, mid);
+			mergeSort(array, helper, mid+1, high);
+			merge(array, helper, low, mid, high);
+			
+		}
+
+	}
+	
+	public void merge(List<Integer> array,int[] helper, int low, int mid, int high){	
+		for(int i = low; i <= high; i++){
+			helper[i] = array.get(i);
+		}
+		int helperLeft = low;
+		int helperRight = mid + 1;
+		int current = low;
+		
+		while(helperLeft <= mid && helperRight <= high){
+				if(helper[helperLeft] <= helper[helperRight]){
+					array.set(current,helper[helperRight]);
+					helperRight++;
+				}else{
+					array.set(current,helper[helperLeft]);
+					helperLeft++;
+				}
+				current++;
+			}
+			
+		int remainder = high - mid;
+		for(int i = 0; i <=remainder;i++){
+			array.set(current+i,helper[current + i]);
+		}
 	}
 	
 	/**
