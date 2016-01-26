@@ -12,3 +12,65 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2016-01-25 18:36:38.339 -----------------------------------------------
+eclipse.buildId=4.5.1.M20150904-0015
+java.version=1.8.0_66
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.equinox.ds 1 0 2016-01-25 18:36:59.060
+!MESSAGE Could not bind a reference of component org.eclipse.fx.core.internal.JUtilLoggerFactory. The reference is: Reference[name = registerHandler, interface = java.util.logging.Handler, policy = dynamic, policy-option = greedy, cardinality = 0..n, target = null, bind = registerHandler, unbind = unregisterHandler, updated = null]
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-01-25 18:37:01.273
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Andreas'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.equinox.ds 1 0 2016-01-25 18:37:02.781
+!MESSAGE Could not bind a reference of component org.eclipse.fx.ide.css.cssext.ui.internal.DefaultCssExtProvider. The reference is: Reference[name = ICSSExtModelProvider, interface = org.eclipse.fx.ide.css.cssext.ICSSExtModelProvider, policy = dynamic, cardinality = 0..n, target = null, bind = bindCssExtensionModelProvider, unbind = unbindCssExtensionModelProvider]
+
+!ENTRY org.eclipse.jdt.debug 4 125 2016-01-25 19:14:28.329
+!MESSAGE Internal error logged from JDI Debug: 
+!STACK 0
+org.eclipse.jdi.TimeoutException: Timeout occurred while waiting for packet 378.
+	at org.eclipse.jdi.internal.connect.PacketReceiveManager.getReply(PacketReceiveManager.java:187)
+	at org.eclipse.jdi.internal.connect.PacketReceiveManager.getReply(PacketReceiveManager.java:198)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:192)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:268)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.getIDSizes(VirtualMachineImpl.java:984)
+	at org.eclipse.jdi.internal.VirtualMachineImpl.packetSendManager(VirtualMachineImpl.java:343)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:187)
+	at org.eclipse.jdi.internal.MirrorImpl.requestVM(MirrorImpl.java:227)
+	at org.eclipse.jdi.internal.request.EventRequestImpl.enable(EventRequestImpl.java:258)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget$ThreadStartHandler.createRequest(JDIDebugTarget.java:1971)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget$ThreadStartHandler.<init>(JDIDebugTarget.java:1959)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initializeRequests(JDIDebugTarget.java:517)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.initialize(JDIDebugTarget.java:456)
+	at org.eclipse.jdt.internal.debug.core.model.JDIDebugTarget.<init>(JDIDebugTarget.java:324)
+	at org.eclipse.jdt.debug.core.JDIDebugModel$1.run(JDIDebugModel.java:185)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2241)
+	at org.eclipse.jdt.debug.core.JDIDebugModel.newDebugTarget(JDIDebugModel.java:189)
+	at org.eclipse.jdt.internal.launching.StandardVMDebugger.createDebugTarget(StandardVMDebugger.java:473)
+	at org.eclipse.jdt.internal.launching.StandardVMDebugger.run(StandardVMDebugger.java:349)
+	at org.eclipse.jdt.launching.JavaLaunchDelegate.launch(JavaLaunchDelegate.java:102)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:885)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:739)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1039)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$8.run(DebugUIPlugin.java:1256)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+
+!ENTRY org.eclipse.core.jobs 4 2 2016-01-25 19:14:28.692
+!MESSAGE An internal error occurred during: "JDI Event Dispatch".
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.jdt.internal.debug.core.breakpoints.JavaBreakpoint.installableReferenceType(JavaBreakpoint.java:418)
+	at org.eclipse.jdt.internal.debug.core.breakpoints.JavaBreakpoint.handleClassPrepareEvent(JavaBreakpoint.java:375)
+	at org.eclipse.jdt.internal.debug.core.breakpoints.JavaBreakpoint.handleEvent(JavaBreakpoint.java:295)
+	at org.eclipse.jdt.internal.debug.core.EventDispatcher.dispatch(EventDispatcher.java:152)
+	at org.eclipse.jdt.internal.debug.core.EventDispatcher.access$0(EventDispatcher.java:100)
+	at org.eclipse.jdt.internal.debug.core.EventDispatcher$1.run(EventDispatcher.java:250)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
