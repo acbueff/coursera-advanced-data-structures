@@ -123,12 +123,13 @@ public abstract class Graph {
 	public List<Integer> degreeSequence() {
 		List<Integer> degree = new ArrayList<>();
 		List<Integer> NeighborList;
+		List<Integer> NeighborInList;
 		int inNeighbor;
 		int outNeighbor;
 		int degrees;
-		for(int i = 0; i <= numVertices; i++){
-			NeighborList = getInNeighbors(i);
-			inNeighbor = NeighborList.size();
+		for(int i = 0; i < numVertices; i++){
+			NeighborInList = getInNeighbors(i);
+			inNeighbor = NeighborInList.size();
 			NeighborList = getNeighbors(i);
 			outNeighbor = NeighborList.size();
 			degrees = inNeighbor + outNeighbor;
@@ -147,7 +148,7 @@ public abstract class Graph {
 	}
 	
 	public void mergeSort(List<Integer> array,int[] helper, int low, int high){
-		if(high >= low){
+		if(high >low){
 			int mid = (low + high)/2;
 			
 			mergeSort(array, helper, low, mid);
@@ -167,7 +168,7 @@ public abstract class Graph {
 		int current = low;
 		
 		while(helperLeft <= mid && helperRight <= high){
-				if(helper[helperLeft] <= helper[helperRight]){
+				if(helper[helperLeft] <= helper[helperRight]){//order largest to smallest
 					array.set(current,helper[helperRight]);
 					helperRight++;
 				}else{
@@ -175,9 +176,9 @@ public abstract class Graph {
 					helperLeft++;
 				}
 				current++;
-			}
+		}
 			
-		int remainder = high - mid;
+		int remainder = mid - helperLeft;
 		for(int i = 0; i <=remainder;i++){
 			array.set(current+i,helper[current + i]);
 		}
@@ -197,7 +198,7 @@ public abstract class Graph {
 	 */
 	public String toString() {
 		String s = "\nGraph with " + numVertices + " vertices and " + numEdges + " edges.\n";
-		s += "Degree sequence: " + degreeSequence() + ".\n";
+		s += "Degree sequence: " + degreeSequence().toString() + ".\n";
 		if (numVertices <= 20) s += adjacencyString();
 		return s;
 	}
