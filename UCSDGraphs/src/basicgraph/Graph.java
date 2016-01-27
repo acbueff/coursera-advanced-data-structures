@@ -142,13 +142,17 @@ public abstract class Graph {
 	}
 	
 	
+	/*
+	 * merge sort used to order values largest to smallest
+	 */
 	public void mergeSort(List<Integer> degree){
 		int[] helper = new int[degree.size()];
+		
 		mergeSort(degree, helper, 0, degree.size()-1);
 	}
 	
 	public void mergeSort(List<Integer> array,int[] helper, int low, int high){
-		if(high >low){
+		if(low < high){
 			int mid = (low + high)/2;
 			
 			mergeSort(array, helper, low, mid);
@@ -163,25 +167,33 @@ public abstract class Graph {
 		for(int i = low; i <= high; i++){
 			helper[i] = array.get(i);
 		}
+		
 		int helperLeft = low;
 		int helperRight = mid + 1;
 		int current = low;
 		
 		while(helperLeft <= mid && helperRight <= high){
-				if(helper[helperLeft] <= helper[helperRight]){//order largest to smallest
-					array.set(current,helper[helperRight]);
-					helperRight++;
-				}else{
+				if(helper[helperLeft] >= helper[helperRight]){//order largest to smallest
 					array.set(current,helper[helperLeft]);
 					helperLeft++;
+				}else{
+					array.set(current,helper[helperRight]);
+					helperRight++;
 				}
 				current++;
 		}
 			
-		int remainder = mid - helperLeft;
-		for(int i = 0; i <=remainder;i++){
-			array.set(current+i,helper[current + i]);
-		}
+		while(helperLeft<=mid){
+            array.set(current,helper[helperLeft]);
+            helperLeft++;
+            current++;
+        }
+         
+        while(helperRight<=high){
+            array.set(current,helper[helperRight]);
+            helperRight++;
+            current++;
+        }
 	}
 	
 	/**
