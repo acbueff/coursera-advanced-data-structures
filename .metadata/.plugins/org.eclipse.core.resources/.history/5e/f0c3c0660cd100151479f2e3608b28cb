@@ -193,14 +193,13 @@ public class MapGraph {
 	
 	private List<GeographicPoint> createPath(HashMap<MapNode,MapNode> map, MapNode goal, MapNode start){
 		List<GeographicPoint> route = new LinkedList<>();
-		MapNode current = goal;
-		
+		MapNode current = map.get(goal);
+		route.add(current.getLocation());
 		while(!current.equals(start)){
-			((LinkedList<GeographicPoint>) route).addFirst(current.getLocation());
-			//route.addFirst(map.get(current).getLocation());
+			route.add(map.get(current).getLocation());
 			current = map.get(current);
 		}
-		((LinkedList<GeographicPoint>) route).addFirst(start.getLocation());
+		route.add(start.getLocation());
 		return route;
 	}
 	

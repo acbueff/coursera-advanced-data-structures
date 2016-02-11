@@ -6,7 +6,7 @@ import java.util.List;
 
 import geography.GeographicPoint;
 
-public class MapNode implements Comparable {
+public class MapNode {
 	private GeographicPoint location;
 	private HashSet<MapEdge> edgeList; // = new ArrayList<>();
 
@@ -42,12 +42,6 @@ public class MapNode implements Comparable {
 		
 		
 		return neighbors;
-	}
-
-	@Override
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 	

@@ -196,11 +196,11 @@ public class MapGraph {
 		MapNode current = goal;
 		
 		while(!current.equals(start)){
-			((LinkedList<GeographicPoint>) route).addFirst(current.getLocation());
+			route.add(current.getLocation());
 			//route.addFirst(map.get(current).getLocation());
 			current = map.get(current);
 		}
-		((LinkedList<GeographicPoint>) route).addFirst(start.getLocation());
+		route.add(start.getLocation());
 		return route;
 	}
 	
