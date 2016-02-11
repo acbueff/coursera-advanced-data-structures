@@ -8,7 +8,13 @@
 package roadgraph;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -26,12 +32,15 @@ public class MapGraph {
 	//TODO: Add your member variables here in WEEK 2
 	
 	
-	/** 
-	 * Create a new empty MapGraph 
-	 */
+	private HashMap<GeographicPoint, MapNode> nodeMap;// = new HasMap<>();
+	private HashSet<MapEdge> edgeList;
+	
+	
 	public MapGraph()
 	{
 		// TODO: Implement in this constructor in WEEK 2
+		nodeMap = new HashMap<>();
+		edgeList = new HashSet<>();
 	}
 	
 	/**
@@ -41,7 +50,7 @@ public class MapGraph {
 	public int getNumVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		return nodeMap.values().size();
 	}
 	
 	/**
@@ -51,7 +60,8 @@ public class MapGraph {
 	public Set<GeographicPoint> getVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return null;
+		Set<GeographicPoint> vertices = nodeMap.keySet();
+		return vertices;
 	}
 	
 	/**
@@ -60,8 +70,8 @@ public class MapGraph {
 	 */
 	public int getNumEdges()
 	{
-		//TODO: Implement this method in WEEK 2
-		return 0;
+		
+		return edgeList.size();
 	}
 
 	
@@ -75,8 +85,12 @@ public class MapGraph {
 	 */
 	public boolean addVertex(GeographicPoint location)
 	{
-		// TODO: Implement this method in WEEK 2
-		return false;
+		if(nodeMap.containsKey(location)){
+			return false;
+		}else{
+			nodeMap.put(location, new MapNode(location));
+			return true;
+		}
 	}
 	
 	/**
@@ -93,8 +107,14 @@ public class MapGraph {
 	 */
 	public void addEdge(GeographicPoint from, GeographicPoint to, String roadName,
 			String roadType, double length) throws IllegalArgumentException {
-
-		//TODO: Implement this method in WEEK 2
+			if(length <= 0){
+				throw new IllegalArgumentException();
+			}
+			if(nodeMap.get(from) == null || nodeMap.get(to) == null){
+				throw new IllegalArgumentException();
+			}
+		    nodeMap.get(from).addEdge(to, roadName,roadType,length);
+		    edgeList.add(new MapEdge(from,to,roadName,roadType, length));
 		
 	}
 	
@@ -123,12 +143,64 @@ public class MapGraph {
 	public List<GeographicPoint> bfs(GeographicPoint start, 
 			 					     GeographicPoint goal, Consumer<GeographicPoint> nodeSearched)
 	{
-		// TODO: Implement this method in WEEK 2
+		
+		if(start == null || goal == null ){
+			throw new IllegalArgumentException();
+		}
+		HashMap<MapNode,MapNode> map = new HashMap<>();
+		PriorityQueue<MapNode> nodesToBeVisted = new PriorityQueue<>();
+		HashSet<MapNode> nodesVisted = new HashSet<>();
+		MapNode current = null;
+		MapNode startNode = nodeMap.get(start);
+		MapNode goalNode = nodeMap.get(goal);
+		
+		if(startNode == null || goalNode == null ){
+			System.out.println("No edges exits between start and goal");
+			return null;
+		}
+		
+		nodesToBeVisted.add(startNode);
+		nodeSearched.accept(startNode.getLocation());
+		while(!nodesToBeVisted.isEmpty()){
+			current = nodesToBeVisted.remove();
+			nodeSearched.accept(current.getLocation());
+			if(current.equals(goalNode)){
+				break;
+			}
+
+				for(MapEdge o : current.getEdgeList()){
+					if(!nodesVisted.contains(nodeMap.get(o.getEnd()))){
+						nodesVisted.add(nodeMap.get(o.getEnd()));
+						nodesToBeVisted.add(nodeMap.get(o.getEnd()));
+						map.put(nodeMap.get(o.getEnd()), current);
+					}
+				}
+			
+				
+			
+		}
+		
+		if(!current.equals(goalNode)){
+			return null;//no path
+		}
 		
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
+		
 
-		return null;
+		return createPath(map,goalNode,startNode);
+	}
+	
+	private List<GeographicPoint> createPath(HashMap<MapNode,MapNode> map, MapNode goal, MapNode start){
+		List<GeographicPoint> route = new LinkedList<>();
+		MapNode current = map.get(goal);
+		route.add(current.getLocation());
+		while(!current.equals(start)){
+			route.add(map.get(current).getLocation());
+			current = map.get(current);
+		}
+		route.add(start.getLocation());
+		return route;
 	}
 	
 

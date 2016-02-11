@@ -1,0 +1,17 @@
+package roadgraph;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MapNode {
+	private List<MapEdge> edgeList = new ArrayList<>();
+
+	public List<MapEdge> getEdgeList() {
+		return edgeList;
+	}
+
+	public void setEdgeList(List<MapEdge> edgeList) {
+		this.edgeList = edgeList;
+	}
+
+}
