@@ -34,6 +34,7 @@ public class MapGraph {
 	
 	private HashMap<GeographicPoint, MapNode> nodeMap;// = new HasMap<>();
 	private HashSet<MapEdge> edgeList;
+	private HashMap<MapNode,Double> distanceTo;
 	
 	
 	public MapGraph()
@@ -148,36 +149,35 @@ public class MapGraph {
 			throw new IllegalArgumentException();
 		}
 		HashMap<MapNode,MapNode> map = new HashMap<>();
-		PriorityQueue<MapNode> nodesToBeVisted = new PriorityQueue<>();
-		HashSet<MapNode> nodesVisted = new HashSet<>();
+		PriorityQueue<MapNode> nodesToBeVisited = new PriorityQueue<>();
+		HashSet<MapNode> nodesVisited = new HashSet<>();
 		MapNode current = null;
 		MapNode startNode = nodeMap.get(start);
 		MapNode goalNode = nodeMap.get(goal);
-		
+		MapNode temp = null;
 		if(startNode == null || goalNode == null ){
 			System.out.println("No edges exits between start and goal");
 			return null;
 		}
 		
-		nodesToBeVisted.add(startNode);
+		nodesToBeVisited.add(startNode);
 		nodeSearched.accept(startNode.getLocation());
-		while(!nodesToBeVisted.isEmpty()){
-			current = nodesToBeVisted.remove();
+		while(!nodesToBeVisited.isEmpty()){
+			current = nodesToBeVisited.remove();
 			nodeSearched.accept(current.getLocation());
 			if(current.equals(goalNode)){
 				break;
 			}
 
-				for(MapEdge o : current.getEdgeList()){
-					if(!nodesVisted.contains(nodeMap.get(o.getEnd()))){
-						nodesVisted.add(nodeMap.get(o.getEnd()));
-						nodesToBeVisted.add(nodeMap.get(o.getEnd()));
-						map.put(nodeMap.get(o.getEnd()), current);
+				for(MapEdge o : current.getEdgeList()){//turn into function to make less ugly?
+					temp = nodeMap.get(o.getEnd());
+					if(!nodesVisited.contains(temp)){
+						nodesVisited.add(temp);
+						nodesToBeVisited.add(temp);
+						map.put(temp, current);
 					}
 				}
-			
-				
-			
+
 		}
 		
 		if(!current.equals(goalNode)){
@@ -235,8 +235,62 @@ public class MapGraph {
 		// Hook for visualization.  See writeup.
 		//nodeSearched.accept(next.getLocation());
 		
+		
+		//initialize priority queue(PQ), visited HashSet,
+		//parent HashMap, and distances to infinity
+		PriorityQueue<MapNode> queue = new PriorityQueue<>();
+		HashSet<MapNode> visited = new HashSet<>();
+		HashMap<MapNode,MapNode> parentMap = new HashMap<>();
+		//HashMap<MapNode, Integer> distances = new HashMap<>();
+		double distance = Integer.MAX_VALUE;
+		//InitializeQueue(queue);
+		setLengthInfinite();
+		
+		MapNode current = null;
+		MapNode temp = null;
+		MapNode startNode = nodeMap.get(start);
+		MapNode goalNode = nodeMap.get(goal);
+		startNode.setLength(0);
+		queue.add(startNode);
+		while(!queue.isEmpty()){
+			current = queue.remove();
+			if(!visited.contains(current)){
+				visited.add(current);
+				//REACHED GOAL
+				if(current.equals(goalNode)){
+					System.out.println("reachedgoal");
+					return createPath(parentMap,goalNode,startNode);
+				}
+				for(MapEdge n : current.getEdgeList()){
+					temp = nodeMap.get(n.getEnd());
+					if(!visited.contains(temp)){
+						//if path through curr to n is shorter
+						
+						if(temp.getLength() > (n.getDistance()+current.getLength())){
+							//distance = n.getDistance();
+							temp.setLength(n.getDistance()+current.getLength());
+							parentMap.put(temp,current);
+							queue.add(temp);
+							//queue.;
+						}
+					}
+				}
+			}
+			
+		}//endwhile, if we get here then there's no path
+		
+		
 		return null;
 	}
+	
+	private void setLengthInfinite(){
+		MapNode temp = null;
+		for(GeographicPoint n: nodeMap.keySet()){
+			nodeMap.get(n).setLength(Integer.MAX_VALUE);
+			
+		}
+	}
+
 
 	/** Find the path from start to goal using A-Star search
 	 * 
