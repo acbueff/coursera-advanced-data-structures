@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Encapsulate field &apos;roadgraph.MapNode.predictedLength&apos; in &apos;roadgraph.MapNode&apos;&#x0D;&#x0A;- Original project: &apos;UCSDGraphs&apos;&#x0D;&#x0A;- Original element: &apos;roadgraph.MapNode.predictedLength&apos;&#x0D;&#x0A;- Getter method name: &apos;getPredictedLength&apos;&#x0D;&#x0A;- Setter method name: &apos;setPredictedLength&apos;&#x0D;&#x0A;- Field visibility: &apos;public&apos;&#x0D;&#x0A;- Use getter and setter methods in declaring type" comments="false" declaring="true" description="Encapsulate field &apos;predictedLength&apos;" flags="589830" getter="getPredictedLength" id="org.eclipse.jdt.ui.self.encapsulate" input="/src&lt;roadgraph{MapNode.java[MapNode^predictedLength" insertion="8" setter="setPredictedLength" stamp="1455877699281" version="1.0" visibility="1"/>
+</session>
