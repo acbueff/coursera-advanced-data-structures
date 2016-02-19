@@ -258,17 +258,20 @@ public class MapGraph {
 				visited.add(current);
 				//REACHED GOAL
 				if(current.equals(goalNode)){
-
+					System.out.println("reachedgoal");
 					return createPath(parentMap,goalNode,startNode);
 				}
 				for(MapEdge n : current.getEdgeList()){
 					temp = nodeMap.get(n.getEnd());
 					if(!visited.contains(temp)){
 						//if path through curr to n is shorter
+						
 						if(temp.getLength() > (n.getDistance()+current.getLength())){
+							//distance = n.getDistance();
 							temp.setLength(n.getDistance()+current.getLength());
 							parentMap.put(temp,current);
 							queue.add(temp);
+							//queue.;
 						}
 					}
 				}
